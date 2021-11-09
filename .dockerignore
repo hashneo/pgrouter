@@ -1,0 +1,13 @@
+node_modules
+.DS_Store
+.dockerignore
+Dockerfile
+Dockerfile.*
+circle.yml
+Jenkinsfile
+.git*
+.circle*
+README*
+ctx_filter
+context_filter
+server.js

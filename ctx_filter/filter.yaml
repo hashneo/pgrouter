@@ -1,0 +1,39 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: EnvoyFilter
+metadata:
+  name: server-app-wasm
+  namespace: external-vms
+spec:
+  configPatches:
+    - applyTo: NETWORK_FILTER
+      match:
+        context: SIDECAR_INBOUND
+        listener:
+          portNumber: 15432
+          filterChain:
+            filter:
+              name: "envoy.filters.network.tcp_proxy"
+      patch:
+        operation: INSERT_BEFORE
+        value:
+          name: envoy.filters.network.wasm
+          typed_config:
+            "@type": type.googleapis.com/envoy.extensions.filters.network.wasm.v3.Wasm
+            config:
+              name: "spiffe-filter"
+              root_id: "add_spiffe_root_id"
+              configuration:
+                "@type": "type.googleapis.com/google.protobuf.StringValue"
+                value: fff
+              vm_config:
+                runtime: "envoy.wasm.runtime.v8"
+                code:
+                  local:
+                    filename: "/var/local/lib/wasm-filters/filter.wasm"
+                allow_precompiled: true
+                vm_id: "spifee-filter"
+
+  workloadSelector:
+    labels:
+      app: postgres
+

@@ -1,0 +1,17 @@
+{
+  "name": "pgrouter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "hexdump-nodejs": "^0.1.0",
+    "node-tcp-proxy": "git+https://github.com/hashneo/node-tcp-proxy.git",
+    "pg-protocol": "^1.5.0",
+    "util": "^0.12.4"
+  }
+}
